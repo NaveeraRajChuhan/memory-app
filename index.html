@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Memory Master | Brain Training Game</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="particles"></div>
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    <div class="container py-3 py-md-4">
+        <!-- Header Section -->
+        <div class="row mb-4 fade-in">
+            <div class="col-12">
+                <div class="header-card text-center">
+                    <div class="logo-wrapper">
+                        <div class="memory-icon">
+                            <i class="fas fa-brain"></i>
+                            <i class="fas fa-puzzle-piece puzzle-icon"></i>
+                        </div>
+                    </div>
+                    <h1 class="app-title">Memory<span class="gradient-text">Master</span></h1>
+                    <p class="app-subtitle">Test your memory • Match the pairs • Train your brain</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="row g-3 mb-4 fade-in-up">
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Score</div>
+                        <div class="stat-value" id="score">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Moves</div>
+                        <div class="stat-value" id="moves">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Time</div>
+                        <div class="stat-value" id="timer">00:00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Best Score</div>
+                        <div class="stat-value" id="bestScore">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="row mb-4 fade-in-up">
+            <div class="col-12">
+                <div class="controls-card">
+                    <div class="difficulty-section">
+                        <label class="control-label">
+                            <i class="fas fa-chart-simple"></i> Difficulty
+                        </label>
+                        <div class="difficulty-buttons">
+                            <button class="difficulty-btn" data-difficulty="easy">
+                                <i class="fas fa-seedling"></i> Easy
+                            </button>
+                            <button class="difficulty-btn active" data-difficulty="medium">
+                                <i class="fas fa-chart-line"></i> Medium
+                            </button>
+                            <button class="difficulty-btn" data-difficulty="hard">
+                                <i class="fas fa-mountain"></i> Hard
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="game-actions">
+                        <button class="btn-new-game" id="newGameBtn">
+                            <i class="fas fa-play"></i> New Game
+                        </button>
+                        <button class="btn-reset" id="resetBtn">
+                            <i class="fas fa-undo-alt"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="row fade-in-up">
+            <div class="col-12">
+                <div class="game-card">
+                    <div class="game-board" id="gameBoard">
+                        <!-- Cards will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div class="row mt-4 fade-in-up">
+            <div class="col-12">
+                <div class="leaderboard-card">
+                    <div class="card-header-custom">
+                        <h5 class="mb-0">
+                            <i class="fas fa-crown me-2"></i>
+                            Hall of Fame
+                        </h5>
+                        <button class="btn-clear-leaderboard" id="clearLeaderboard">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                    </div>
+                    <div class="leaderboard-list" id="leaderboardList">
+                        <div class="empty-state-leaderboard">
+                            <i class="fas fa-trophy"></i>
+                            <p>No scores yet. Play a game to appear here!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div class="modal fade" id="winModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content win-modal">
+                <div class="modal-body text-center">
+                    <div class="win-animation">
+                        <i class="fas fa-trophy"></i>
+                        <i class="fas fa-star star-1"></i>
+                        <i class="fas fa-star star-2"></i>
+                        <i class="fas fa-star star-3"></i>
+                    </div>
+                    <h3 class="win-title">Victory!</h3>
+                    <p class="win-message" id="winMessage">You completed the game!</p>
+                    <div class="win-stats">
+                        <div class="win-stat">
+                            <span>Moves:</span>
+                            <strong id="winMoves">0</strong>
+                        </div>
+                        <div class="win-stat">
+                            <span>Time:</span>
+                            <strong id="winTime">00:00</strong>
+                        </div>
+                        <div class="win-stat">
+                            <span>Score:</span>
+                            <strong id="winScore">0</strong>
+                        </div>
+                    </div>
+                    <button class="btn-play-again" id="playAgainBtn">
+                        <i class="fas fa-redo-alt"></i> Play Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
